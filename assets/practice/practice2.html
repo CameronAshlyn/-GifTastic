@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Giphy API</title>
+</head>
+
+<body>
+    <div id="gifBtn"></div>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var topics = ["cat", "dog", "frog", "pig"]
+            console.log(topics);
+
+            // creating buttons from topics array
+            function createsButton() {
+                for (var i = 0; i < topics.length; i++) {
+                    var dataButton = $("<button>");
+                    dataButton.attr("data-search", topics[i]); //this becomes the method on our dynimcally generated object and the object is <"button">
+                    dataButton.text(topics[i]);
+                    $("#gifBtn").append(dataButton);
+
+                };
+            };
+
+            createsButton();
+
+
+            //function to add GIFs to the page
+        
+            $("button").on("click", function () {
+                //checking to see that buttons work on click event
+                var x = $(this).attr("data-search");
+                console.log(x);
+                // this is where the ajax call goes and look at exercise 15 pausing GIFs (ajax folder 6)
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + x + "&api_key=W2QCIyR2FxLhIFzqSaec9SY7QCZlPRLR&limit=10";
+                console.log(queryURL);
+
+
+                $.ajax({
+                    url: queryURL,
+                    method: 'GET'
+                }).done(function (response) {
+                    // console.log(response.data[0].rating);
+                   var $(<img>)
+
+                    for (i = 0; i < response.data.length; i++) {
+
+                        $("#gifArea").prepend("<p>Rating: " + response.data[i].rating + "<p>");
+                        $("#gifArea").prepend("<img src='" + response.data[i].images.downsized.url + "'>");
+                    }
+
+                });
+            
+
+
+
+                //signle source of truth is array
+                //excercise 15 in ajax
+
+            });
+        });
+
+
+
+
+
+
+
+        //creating buttons
+//         function creatingBtn()
+//         var topicsBtn = $("<button>");
+
+//         var btnAttr = $("<button>").data();
+//             console.log(btnAttr);
+
+// function myFunction() {
+//     var attr = document.createAttribute("class");
+//     attr.value = "democlass";
+//     var h = document.getElementsByTagName("H1")[0];
+//     h.setAttributeNode(attr); 
+// }
+
+    //     
+
+
+    //     var button = $("<button>");
+    //     var buttonAttr = $("<button>").setAttribute({data-search: })
+
+    //     var x = document.createElement("INPUT");
+    // x.setAttribute("type", "search");
+    // document.body.appendChild(x);
+
+    //     var div = $("<div>");
+    //      var titleDiv = $("<div>").append(data.title);
+    //      var image = $("<img>").attr({src: data.user.avatar_url, alt: data.title});
+    //     var main = div.append(titleDiv, image);
+    //      $("body").append(main);
+
+
+
+
+
+
+
+
+    //     $("#gifBtn").on("click", function(){
+    //         console.log("BUTTON CLICKED!!");
+    //     })
+
+
+
+
+            // var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + x + "&api_key=W2QCIyR2FxLhIFzqSaec9SY7QCZlPRLR&limit=10";
+            // console.log(queryURL);
+
+
+            // $.ajax({
+            //     url: queryURL,
+            //     method: 'GET'
+            // }).done(function (response) {
+
+
+
+
+        // });
+
+
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>

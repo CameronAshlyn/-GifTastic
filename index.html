@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Giphy API</title>
+
+</head>
+
+<body>
+
+    <div class="giphy">
+
+        <div class="giphy__buttons">
+
+        </div>
+
+
+        <form action="">
+            <div>
+                <input type="text" placeholder="search giphy..." name="search" id="search">
+            </div>
+
+            <button class="giphy__search">Search Giphy</button>
+        </form>
+
+        <div class="giphy__images">
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+
+
+
+
+//creates a button
+function addButton(text) {
+    var button = $("<button>");
+        button.html(text);
+    return button;
+};
+
+
+function createImage(url, still, animated) {
+    var image = $("<img>");
+    image.attr({
+        src: still,
+        "data-animated": animated,
+        "data-still": still
+
+
+    });
+    return image; 
+}
+
+
+
+
+//displays Giphy 
+function displayGiphy(response) {
+    console.log("Response: ", response);
+
+    var data = response.data;
+
+    for (var i = 0; i < data.length; i++) {
+        
+        var animated = data[i].images.fixed_height.url;
+        var still = data[i].images.fixed_height_still.url;
+        var url = still;
+
+
+        
+        $(".giphy__images").append(createImage(url, still, animated));
+    }
+
+   
+
+
+
+}
+
+
+
+
+
+
+
+function grabGiphy(val) {
+$.ajax({
+    url: "https://api.giphy.com/v1/gifs/search?q=" + val + "&api_key=W2QCIyR2FxLhIFzqSaec9SY7QCZlPRLR&limit=10",
+    method: "GET"
+})
+.done(function(data){
+    console.log("Data: ", data);
+    displayGiphy(data);
+})
+.fail(function(error) {
+    console.log("error: ", error);
+});
+
+};
+
+function searchGiphy(event){
+    event.preventDefault();
+
+    //get value of button
+    var value = $("#search").val();
+    $(".giphy__buttons").append(addButton(value));
+    grabGiphy(value);
+    $("#search").val("");
+
+};
+
+$(".giphy__search").on("click", searchGiphy);
+
+
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>

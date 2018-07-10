@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Giphy API</title>
+</head>
+
+<body>
+
+    <button data-search="sleepy dog">dog</button>
+    <button data-search="sleepy cat">cat</button>
+    <button data-search="happy sloth">sloth</button>
+
+    <div id="gifArea"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $("button").on("click", function () {
+            var x = $(this).data("search");
+            console.log(x)
+
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + x + "&api_key=W2QCIyR2FxLhIFzqSaec9SY7QCZlPRLR&limit=10";
+            console.log(queryURL);
+
+
+            $.ajax({
+                url: queryURL,
+                method: 'GET'
+            }).done(function (response) {
+                console.log(response.data[0].rating)
+
+                for (i = 0; i < response.data.length; i++) {
+
+                    $("#gifArea").prepend("<p>Rating: " + response.data[i].rating + "<p>");
+                    $("#gifArea").prepend("<img src='" + response.data[i].images.downsized.url + "'>");
+                }
+
+            });
+
+        });
+
+
+
+
+  
+
+
+    </script>
+
+</body>
+
+</html>
